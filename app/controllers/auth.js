@@ -75,4 +75,17 @@ const register = async (req, res, next) => {
   }
 };
 
-export { login, register };
+const getUser = async (req, res) => {
+  try {
+    console.log(req.body.username);
+    const user = await User.findByPk(req.params.user.pk);
+    res.status(200).json({ message: "User found", data: { user } });
+  } catch (err) {
+    res.send(404).json({
+      status: "error",
+      message: err.message,
+    });
+  }
+};
+
+export { login, register, getUser };
