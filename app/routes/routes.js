@@ -8,7 +8,7 @@ router.post("/login", login);
 
 router.post("/register", register);
 
-router.get(getUser);
+router.get("/:id", getUser);
 
 const flatController = new FlatController();
 router.post("/create_flat", flatController.createFlat);

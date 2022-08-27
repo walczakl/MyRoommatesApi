@@ -76,15 +76,17 @@ const register = async (req, res, next) => {
 };
 
 const getUser = async (req, res) => {
-  try {
-    console.log(req.body.username);
-    const user = await User.findByPk(req.params.user.pk);
-    res.status(200).json({ message: "User found", data: { user } });
-  } catch (err) {
-    res.send(404).json({
-      status: "error",
-      message: err.message,
-    });
+  const user = await User.findOne({
+    where: {
+      id: req.params.id,
+    },
+  }).catch((err) => {
+    console.log("error", err);
+  });
+  if (user) {
+    return res.status(209).json({ message: "User found" });
+  } else {
+    return res.status(409).json({ message: "User not found" });
   }
 };
 
