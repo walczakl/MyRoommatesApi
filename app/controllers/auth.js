@@ -23,7 +23,11 @@ const login = async (req, res, next) => {
         const token = jwt.sign({ username: req.body.username }, "secret", {
           expiresIn: "1h",
         });
-        res.status(200).json({ message: "User logged in", token: token, expiresIn: moment().add(1, 'hour').format('YYYY-MM-DD HH:mm:ss') });
+        res.status(200).json({
+          message: "User logged in",
+          token: token,
+          expiresIn: moment().add(1, "hour").format("YYYY-MM-DD HH:mm:ss"),
+        });
       } else {
         // password doesnt match
         res.status(401).json({ message: "Invalid username or password" });
@@ -32,7 +36,7 @@ const login = async (req, res, next) => {
   }
 };
 
-const signup = async (req, res, next) => {
+const register = async (req, res, next) => {
   const user = await User.findOne({
     where: {
       username: req.body.username,
@@ -71,4 +75,4 @@ const signup = async (req, res, next) => {
   }
 };
 
-export { login, signup };
+export { login, register };
