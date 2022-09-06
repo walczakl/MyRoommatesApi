@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post("/login", login);
 
-router.post("/signup", signup);
+router.post("/register", signup);
 
 // Flat
 const flatController = new FlatController();
