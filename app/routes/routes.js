@@ -1,13 +1,16 @@
 import express from "express";
-import { login, signup } from "../controllers/auth.js";
-import FlatController from "../controllers/flat.js";
 import TaskController from "../controllers/task.js";
 import Tasks_UsersController from "../controllers/tasks_users.js";
+import { login, register, getUser } from "../controllers/auth.js";
+import FlatController from "../controllers/flat.js";
+
 const router = express.Router();
 
 router.post("/login", login);
 
-router.post("/register", signup);
+router.post("/register", register);
+
+router.get("/:id", getUser);
 
 // Flat
 const flatController = new FlatController();
