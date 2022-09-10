@@ -8,11 +8,8 @@ const Flat = sequelize.define("flats", {
     allowNull: false,
     primaryKey: true,
   },
-  createdAt: {
-    type: DataTypes.DATE,
-  },
-  updatedAt: {
-    type: DataTypes.DATE,
+  ownerId: {
+    type: DataTypes.INTEGER,
   },
   name: {
     type: DataTypes.STRING,
@@ -21,6 +18,12 @@ const Flat = sequelize.define("flats", {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
   },
 });
 

@@ -23,13 +23,11 @@ const login = async (req, res, next) => {
         const token = jwt.sign({ username: req.body.username }, "secret", {
           expiresIn: "1h",
         });
-        res
-          .status(200)
-          .json({
-            message: "User logged in",
-            token: token,
-            expiresIn: moment().add(1, "hour").format("YYYY-MM-DD HH:mm:ss"),
-          });
+        res.status(200).json({
+          message: "User logged in",
+          token: token,
+          expiresIn: moment().add(1, "hour").format("YYYY-MM-DD HH:mm:ss"),
+        });
       } else {
         // password doesnt match
         res.status(401).json({ message: "Invalid username or password" });

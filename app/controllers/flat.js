@@ -17,9 +17,6 @@ class FlatController extends AppController {
         if (err) {
           return res.status(500).json({ message: "couldnt hash the password" });
         } else if (passwordHash) {
-          res
-            .status(201)
-            .json({ success: true, message: "Flat added successfully." });
           return Flat.create({
             name: name,
             password: passwordHash,
