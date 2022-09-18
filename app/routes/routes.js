@@ -12,6 +12,8 @@ router.post("/register", register);
 
 router.get("/:id", getUser);
 
+router.get("/get_user/:username", getUser);
+
 // Flat
 const flatController = new FlatController();
 router.post("/create_flat", flatController.createFlat);
