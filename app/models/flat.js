@@ -11,6 +11,9 @@ const Flat = sequelize.define("flats", {
   ownerId: {
     type: DataTypes.INTEGER,
   },
+  ownerName: {
+    type: DataTypes.STRING,
+  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,

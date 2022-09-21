@@ -11,7 +11,7 @@ class FlatController extends AppController {
   }
   async createFlat(req, res, next) {
     // super.isAuth(req, res, next);
-    const { name, password } = req.body;
+    const { name, password, ownerId, ownerName } = req.body;
     if (name && password) {
       bcrypt.hash(password, 12, (err, passwordHash) => {
         if (err) {
@@ -20,6 +20,8 @@ class FlatController extends AppController {
           return Flat.create({
             name: name,
             password: passwordHash,
+            ownerId: ownerId,
+            ownerName: ownerName,
           })
             .then((flat) => res.json(flat))
             .catch(next);
@@ -99,7 +101,8 @@ class FlatController extends AppController {
     //super.isAuth(req, res, next);
     const flat = await Flat.findOne({ where: { id: req.params.id } });
     if (flat) {
-      res.json(flat);
+      console.log("Flat id: " + flat.id);
+      res.json(flat.id);
     } else
       res.status(404).json({ success: false, message: "Flat not exists." });
   }
