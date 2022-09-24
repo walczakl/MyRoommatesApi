@@ -25,6 +25,7 @@ router.post("/delete_flat", flatController.deleteFlat);
 
 router.get("/get_flat/:id", flatController.getFlatId);
 router.get("/get_flats", flatController.getAllFlats);
+router.post("/add_user_to_flat/:userid/:flatid", flatController.addUserToFlat);
 
 // Task
 const taskController = new TaskController();

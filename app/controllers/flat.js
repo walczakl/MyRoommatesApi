@@ -4,6 +4,7 @@ import moment from "moment";
 import Flat from "../models/flat.js";
 import e from "express";
 import bcrypt from "bcryptjs";
+import User from "../models/user.js";
 
 class FlatController extends AppController {
   constructor() {
@@ -19,7 +20,7 @@ class FlatController extends AppController {
         } else if (passwordHash) {
           return Flat.create({
             name: name,
-            password: passwordHash,
+            password: password,
             ownerId: ownerId,
             ownerName: ownerName,
           })
@@ -102,7 +103,7 @@ class FlatController extends AppController {
     const flat = await Flat.findOne({ where: { id: req.params.id } });
     if (flat) {
       console.log("Flat id: " + flat.id);
-      res.json(flat.id);
+      res.json(flat);
     } else
       res.status(404).json({ success: false, message: "Flat not exists." });
   }
@@ -115,5 +116,20 @@ class FlatController extends AppController {
     } else
       res.status(404).json({ success: false, message: "Flat not exists." });
   }
+
+  async addUserToFlat(req, res, next) {
+    console.log(req.params);
+    const user = await User.findOne({ where: { id: req.params.userid } });
+    const flat = await Flat.findOne({ where: { id: req.params.flatid } });
+    if (user && flat) {
+      user.flatId = flat.id;
+      await user.save();
+    } else {
+      res
+        .status(404)
+        .json({ success: false, message: "Something went wrong." });
+    }
+  }
 }
+
 export default FlatController;
