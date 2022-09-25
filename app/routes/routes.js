@@ -3,6 +3,7 @@ import TaskController from "../controllers/task.js";
 import Tasks_UsersController from "../controllers/tasks_users.js";
 import { login, register, getUser } from "../controllers/auth.js";
 import FlatController from "../controllers/flat.js";
+import ReceiptController from "../controllers/receipt.js";
 
 const router = express.Router();
 
@@ -44,5 +45,11 @@ router.post("/delete_task_user", tasks_UsersController.deleteTaskUser);
 
 router.get("/get_task_user_id/:id", tasks_UsersController.getTaskUserById);
 router.get("/get_tasks_user", tasks_UsersController.getAllTasksUsers);
+
+//Receipt
+const receipt_controller = new ReceiptController()
+router.post('/create_receipt', receipt_controller.createReceipt)
+router.get('/get_summary/:flat_id/:user_id', receipt_controller.getSummary)
+router.get('/get_photo/:filename', receipt_controller.getPhoto)
 
 export default router;
