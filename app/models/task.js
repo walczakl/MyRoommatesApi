@@ -39,8 +39,11 @@ const Task = sequelize.define("tasks", {
   performerId: {
     type: DataTypes.INTEGER,
   },
-  imgPath: {
-    type: DataTypes.STRING,
+  importanceId: {
+    type: DataTypes.INTEGER,
+  },
+  homeId: {
+    type: DataTypes.INTEGER,
   },
 });
 

@@ -37,5 +37,20 @@ class UserController extends AppController {
       return res.status(409).json({ message: "User not found" });
     }
   };
+
+  async getUsersByFlatId(req, res) {
+    const user = await User.findAll({
+      where: {
+        flatId: req.params.id,
+      },
+    }).catch((err) => {
+      console.log("error", err);
+    });
+    if (user) {
+      return res.status(209).json({ user: user });
+    } else {
+      return res.status(409).json({ message: "User not found" });
+    }
+  }
 }
 export default UserController;

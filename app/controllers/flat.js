@@ -4,7 +4,7 @@ import moment from "moment";
 import Flat from "../models/flat.js";
 import e from "express";
 import bcrypt from "bcryptjs";
-
+import User from "../models/user.js";
 class FlatController extends AppController {
   constructor() {
     super();
@@ -111,6 +111,20 @@ class FlatController extends AppController {
       res.json(flats);
     } else
       res.status(404).json({ success: false, message: "Flat not exists." });
+  }
+
+  async addUserToFlat(req, res, next) {
+    console.log(req.params);
+    const user = await User.findOne({ where: { id: req.params.userid } });
+    const flat = await Flat.findOne({ where: { id: req.params.flatid } });
+    if (user && flat) {
+      user.flatId = flat.id;
+      await user.save();
+    } else {
+      res
+        .status(404)
+        .json({ success: false, message: "Something went wrong." });
+    }
   }
 }
 export default FlatController;

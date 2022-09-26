@@ -8,7 +8,7 @@ class TaskController extends AppController {
   constructor() {
     super();
   }
-  addTask(req, res, next) {
+  async addTask(req, res, next) {
     //super.isAuth(req, res, next);
     const {
       title,
@@ -17,38 +17,37 @@ class TaskController extends AppController {
       endTime,
       finished,
       finishedAt,
-      createdBy,
-      forWho,
-      imgPath,
+      creatorId,
+      performerId,
+      importanceId,
+      homeId,
     } = req.body;
     if (title) {
-      Task.create({
+      await Task.create({
         title,
         content,
         isEndTime,
         endTime,
         finished,
         finishedAt,
-        createdBy,
-        forWho,
-        imgPath,
+        creatorId,
+        performerId,
+        importanceId,
+        homeId,
       })
         .then((task) => res.json(task))
         .catch(next);
-      res
-        .status(201)
-        .json({ success: true, message: "Task added successfully." });
     } else
       res
         .status(412)
         .json({ success: false, message: "You have to pass title!" });
   }
 
-  deleteTask(req, res, next) {
-    super.isAuth(req, res, next);
-    const task = Task.findOne({ where: { id: req.body.id } });
+  async deleteTask(req, res, next) {
+    // super.isAuth(req, res, next);
+    const task = await Task.findOne({ where: { id: req.body.id } });
     if (task) {
-      Task.destroy({
+      await Task.destroy({
         where: {
           id: req.body.id,
         },
@@ -60,7 +59,7 @@ class TaskController extends AppController {
       res.status(404).json({ success: false, message: "Task not exists." });
   }
 
-  updateTask(req, res, next) {
+  async updateTask(req, res, next) {
     //super.isAuth(req, res, next);
     const {
       title,
@@ -69,14 +68,15 @@ class TaskController extends AppController {
       endTime,
       finished,
       finishedAt,
-      createdBy,
-      forWho,
-      imgPath,
+      creatorId,
+      performerId,
+      importanceId,
+      homeId,
     } = req.body;
 
-    const task = Task.findOne({ where: { id: req.body.id } });
+    const task = await Task.findOne({ where: { id: req.body.id } });
     if (task) {
-      Task.update(
+      await Task.update(
         {
           title,
           content,
@@ -84,9 +84,10 @@ class TaskController extends AppController {
           endTime,
           finished,
           finishedAt,
-          createdBy,
-          forWho,
-          imgPath,
+          creatorId,
+          performerId,
+          importanceId,
+          homeId,
         },
         {
           where: {
@@ -101,29 +102,41 @@ class TaskController extends AppController {
       res.status(404).json({ success: false, message: "Task not exists." });
   }
 
-  getTaskId(req, res, next) {
+  async getTaskId(req, res, next) {
     //super.isAuth(req, res, next);
-    const task = Task.findOne({ where: { id: req.body.id } });
+    const task = await Task.findOne({ where: { id: req.params.id } });
     if (task) {
-      res.status(201);
-      res.status(201).json({ success: true, message: JSON.stringify(task) });
-      return JSON.stringify(task);
+      res.json(task);
     } else
       res.status(404).json({ success: false, message: "Task not exists." });
   }
 
-  getAllTasks(req, res, next) {
+  async getTaskByCreatorId(req, res, next) {
     //super.isAuth(req, res, next);
-    const tasks = Task.findAll()
-      .then((res) => {
-        console.log(res);
-        res.status(201).json({ success: true, message: JSON.stringify(tasks) });
-        return JSON.stringify(tasks);
-      })
-      .catch((error) => {
-        console.error("Failed to retrieve data : ", error);
-        res.status(404).json({ success: false, message: "Tasks not exists." });
-      });
+    const task = await Task.findAll({ where: { creatorId: req.params.id } });
+    if (task) {
+      res.json(task);
+    } else
+      res.status(404).json({ success: false, message: "Task not exists." });
+  }
+
+  async getTaskByPerformerId(req, res, next) {
+    //super.isAuth(req, res, next);
+    const task = await Task.findAll({ where: { performerId: req.params.id } });
+    if (task) {
+      res.json(task);
+    } else
+      res.status(404).json({ success: false, message: "Task not exists." });
+  }
+
+  async getAllTasks(req, res, next) {
+    //super.isAuth(req, res, next);
+    const tasks = await Task.findAll();
+    if (tasks) {
+      res.json(tasks);
+    } else {
+      res.status(404).json({ success: false, message: "Tasks not exists." });
+    }
   }
 }
 

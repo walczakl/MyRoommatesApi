@@ -26,7 +26,9 @@ const User = sequelize.define("users", {
   email: {
     type: DataTypes.STRING,
   },
+  flatId: {
+    type: DataTypes.STRING,
+  },
 });
-
 
 export default User;
