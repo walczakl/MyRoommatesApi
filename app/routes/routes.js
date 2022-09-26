@@ -1,4 +1,5 @@
 import express from "express";
+import UserController from "../controllers/user.js";
 import TaskController from "../controllers/task.js";
 import Tasks_UsersController from "../controllers/tasks_users.js";
 import { login, register, getUser } from "../controllers/auth.js";
@@ -12,11 +13,10 @@ router.post("/login", login);
 router.post("/register", register);
 
 // User
-// const userController = new UserController();
-// router.get("/get_user_id/:id", userController.getUserById);
-// router.get("/get_user/:username", userController.getUserByUsername);
-
-router.get("/get_user/:username", getUser);
+const userController = new UserController();
+router.get("/get_user_id/:id", userController.getUserById);
+router.get("/get_user/:username", userController.getUserByUsername);
+router.get("/get_users_flat/:id", userController.getUsersByFlatId);
 
 // Flat
 const flatController = new FlatController();
@@ -36,7 +36,9 @@ router.post("/add_task", taskController.addTask);
 router.post("/update_task", taskController.updateTask);
 router.post("/delete_task", taskController.deleteTask);
 
-router.get("/get_task_id/:id", taskController.getTaskId);
+router.get("/get_task/:id", taskController.getTaskId);
+router.get("/get_task_creator/:id", taskController.getTaskByCreatorId);
+router.get("/get_task_performer/:id", taskController.getTaskByPerformerId);
 router.get("/get_tasks", taskController.getAllTasks);
 
 // Tasks_Users

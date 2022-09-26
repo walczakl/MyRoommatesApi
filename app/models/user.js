@@ -35,27 +35,27 @@ const User = sequelize.define("users", {
 
 User.hasMany(Payoff, {
   foreignKey: "paying_user_id",
-  as: 'payUser'
+  as: "payUser",
 });
 
 User.hasMany(Payoff, {
   foreignKey: "owe_user_id",
-  as: 'OweUser'
+  as: "OweUser",
 });
 
 Payoff.belongsTo(User, {
   foreignKey: "paying_user_id",
-  as: 'payUser'
+  as: "payUser",
 });
 
 Payoff.belongsTo(User, {
   foreignKey: "owe_user_id",
-  as: 'oweUser'
+  as: "oweUser",
 });
 
 User.belongsTo(Flat, {
-  foreignKey: 'flatId'
-})
+  foreignKey: "flatId",
+});
 
 Flat.hasMany(User, {
   foreignKey: 'flatId'
