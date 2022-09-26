@@ -5,13 +5,14 @@ import Flat from "../models/flat.js";
 import e from "express";
 import bcrypt from "bcryptjs";
 import User from "../models/user.js";
+
 class FlatController extends AppController {
   constructor() {
     super();
   }
   async createFlat(req, res, next) {
     // super.isAuth(req, res, next);
-    const { name, password } = req.body;
+    const { name, password, ownerId, ownerName } = req.body;
     if (name && password) {
       bcrypt.hash(password, 12, (err, passwordHash) => {
         if (err) {
@@ -19,7 +20,9 @@ class FlatController extends AppController {
         } else if (passwordHash) {
           return Flat.create({
             name: name,
-            password: passwordHash,
+            password: password,
+            ownerId: ownerId,
+            ownerName: ownerName,
           })
             .then((flat) => res.json(flat))
             .catch(next);
@@ -99,6 +102,7 @@ class FlatController extends AppController {
     //super.isAuth(req, res, next);
     const flat = await Flat.findOne({ where: { id: req.params.id } });
     if (flat) {
+      console.log("Flat id: " + flat.id);
       res.json(flat);
     } else
       res.status(404).json({ success: false, message: "Flat not exists." });
@@ -127,4 +131,5 @@ class FlatController extends AppController {
     }
   }
 }
+
 export default FlatController;

@@ -79,13 +79,13 @@ const register = async (req, res, next) => {
 const getUser = async (req, res) => {
   const user = await User.findOne({
     where: {
-      id: req.params.id,
+      username: req.params.username,
     },
   }).catch((err) => {
     console.log("error", err);
   });
   if (user) {
-    return res.status(209).json({ message: "User found" });
+    return res.status(209).json({ user });
   } else {
     return res.status(409).json({ message: "User not found" });
   }
