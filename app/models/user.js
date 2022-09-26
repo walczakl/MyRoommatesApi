@@ -57,6 +57,10 @@ User.belongsTo(Flat, {
   foreignKey: 'flatId'
 })
 
+Flat.hasMany(User, {
+  foreignKey: 'flatId'
+})
+
 // User.sync({alter: false})
 
 export default User;

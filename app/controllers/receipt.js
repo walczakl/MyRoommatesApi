@@ -6,6 +6,7 @@ import Receipt from "../models/receipt.js";
 import Payoff from "../models/payoffs.js";
 import User from "../models/user.js";
 import { Op } from "sequelize";
+import Flat from "../models/flat.js";
 
 class ReceiptController extends AppController {
   constructor() {
@@ -22,7 +23,7 @@ class ReceiptController extends AppController {
             amount: req.body.amount,
             flat_id: req.body.flat_id,
         }).catch(err => console.log(err))
-        if(req.files.length > 0) {
+        if(req?.files?.length > 0) {
             for(const file of req.files) {
                 const image = await Image.create({
                     originalname: file.originalname,
@@ -148,9 +149,9 @@ class ReceiptController extends AppController {
     res.status(202).json(summary);
   }
 
-  getPhoto = async (req, res, next) => {
-    const file = `${path.dirname(__filename)}/uploads/${req.params.filename}`;
-    res.download(file);
+  getReciepts = async (req, res, next) => {
+    const flat = await Flat.findOne({ where: { id: req.params.flatId }, include: [{model: Receipt}] }).catch(err => console.log(err));
+    res.status(200).json(flat.receipts);
   }
 
 }

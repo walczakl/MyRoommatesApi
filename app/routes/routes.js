@@ -27,6 +27,8 @@ router.post("/delete_flat", flatController.deleteFlat);
 router.get("/get_flat/:id", flatController.getFlatId);
 router.get("/get_flats", flatController.getAllFlats);
 router.post("/add_user_to_flat/:userid/:flatid", flatController.addUserToFlat);
+router.get("/getFlatUsers/:flatId", flatController.getFlatUsers);
+
 
 // Task
 const taskController = new TaskController();
@@ -50,6 +52,6 @@ router.get("/get_tasks_user", tasks_UsersController.getAllTasksUsers);
 const receipt_controller = new ReceiptController()
 router.post('/create_receipt', receipt_controller.createReceipt)
 router.get('/get_summary/:flat_id/:user_id', receipt_controller.getSummary)
-router.get('/get_photo/:filename', receipt_controller.getPhoto)
+router.get('/getReciepts/:flatId', receipt_controller.getReciepts)
 
 export default router;

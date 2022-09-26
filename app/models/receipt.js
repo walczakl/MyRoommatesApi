@@ -37,6 +37,10 @@ Receipt.belongsTo(Flat, {
   foreignKey: "flat_id",
 });
 
+Flat.hasMany(Receipt, {
+  foreignKey: "flat_id",
+});
+
 // Receipt.sync({alter: true})
 
 export default Receipt;

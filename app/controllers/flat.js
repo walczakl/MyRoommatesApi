@@ -130,6 +130,11 @@ class FlatController extends AppController {
         .json({ success: false, message: "Something went wrong." });
     }
   }
+
+  async getFlatUsers(req, res, next) {
+    const flat = await Flat.findOne({ where: { id: req.params.flatId }, include: [{model: User}] });
+    res.status(200).json(flat.users)
+  }
 }
 
 export default FlatController;
