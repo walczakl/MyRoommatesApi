@@ -5,8 +5,9 @@ import path from 'node:path';
 import Receipt from "../models/receipt.js";
 import Payoff from "../models/payoffs.js";
 import User from "../models/user.js";
-import { Op } from "sequelize";
+import { Op, } from "sequelize";
 import Flat from "../models/flat.js";
+import sequelize from "../include/database.js";
 
 class ReceiptController extends AppController {
   constructor() {
@@ -152,6 +153,13 @@ class ReceiptController extends AppController {
   getReciepts = async (req, res, next) => {
     const flat = await Flat.findOne({ where: { id: req.params.flatId }, include: [{model: Receipt}] }).catch(err => console.log(err));
     res.status(200).json(flat.receipts);
+  }
+
+  accept = async (req, res, next) => {
+    const flat_id =  req.body.flat_id
+    await sequelize.query(`UPDATE receipts SET closed = 1 WHERE flat_id = ${flat_id}`);
+    await sequelize.query(`UPDATE payoffs SET closed = 1 `);
+    res.status(200).json();
   }
 
 }

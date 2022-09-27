@@ -55,5 +55,7 @@ const receipt_controller = new ReceiptController()
 router.post('/create_receipt', receipt_controller.createReceipt)
 router.get('/get_summary/:flat_id/:user_id', receipt_controller.getSummary)
 router.get('/getReciepts/:flatId', receipt_controller.getReciepts)
+router.post('/accept_summary', receipt_controller.accept)
+
 
 export default router;
