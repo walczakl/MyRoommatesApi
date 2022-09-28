@@ -1,26 +1,27 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../include/database.js";
 
-const Flat = sequelize.define("flats", {
+const Image = sequelize.define("images", {
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
-  ownerId: {
+  originalname: {
+    type: DataTypes.STRING,
+  },
+  mimetype: {
+    type: DataTypes.STRING,
+  },
+  filename: {
+    type: DataTypes.STRING,
+  },
+  path: {
+    type: DataTypes.STRING,
+  },
+  size: {
     type: DataTypes.INTEGER,
-  },
-  ownerName: {
-    type: DataTypes.STRING,
-  },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
   },
   createdAt: {
     type: DataTypes.DATE,
@@ -30,4 +31,4 @@ const Flat = sequelize.define("flats", {
   },
 });
 
-export default Flat;
+export default Image;
